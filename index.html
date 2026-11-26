@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chen-Yu Chen, Ph.D. | Bioengineering &amp; Biomedical Devices</title>
+  <meta name="description" content="Academic and Biotech/MedTech R&D portfolio of Chen-Yu Chen, Ph.D., Staff Research Engineer at the Robert E. Fischell Institute for Biomedical Devices, University of Maryland." />
+
+  <style>
+    /* =========================================================================
+       1. DESIGN TOKENS — BIOTECH / MEDTECH SLATE & NAVY PALETTE
+       ========================================================================= */
+    :root {
+      --navy-950: #080D19;
+      --navy-900: #0F172A;
+      --slate-800: #1E293B;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748B;
+      --slate-400: #94A3B8;
+      --slate-300: #CBD5E1;
+      --slate-200: #E2E8F0;
+      --slate-100: #F1F5F9;
+      --slate-50: #F8FAFC;
+      --medtech-600: #0284C7;
+      --medtech-500: #0EA5E9;
+      --glow-sky: #38BDF8;
+      --medtech-100: #E0F2FE;
+      --medtech-50: #F0F9FF;
+      --white: #FFFFFF;
+
+      --sidebar-w: 276px;
+      --font-sans: 'Source Sans 3', 'Source Sans Pro', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* =========================================================================
+       2. GLOBAL RESET & BENTLEY.UMD.EDU HUMANIST SANS-SERIF TYPOGRAPHY
+       ========================================================================= */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: var(--slate-300);
+      color: var(--slate-800);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      color: var(--navy-900);
+      letter-spacing: -0.01em;
+    }
+
+    a {
+      text-decoration: none;
+      transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    button,
+    input {
+      font-family: var(--font-sans);
+    }
+
+    /* =========================================================================
+       3. LEFT FIXED SIDEBAR (276px WIDE ON DESKTOP, #0F172A DEEP NAVY)
+       ========================================================================= */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      background-color: var(--navy-900);
+      color: var(--slate-200);
+      border-right: 1px solid rgba(30, 41, 59, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 60;
+      overflow-y: auto;
+    }
+
+    /* Top-left Name Block (Doubled top spacing, large EN + ZH name only) */
+    .sidebar-profile {
+      padding: 64px 20px 26px;
+      text-align: center;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
+    }
+
+    .sidebar-name-en {
+      font-size: 1.84rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-name-zh {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--slate-300);
+      line-height: 1.25;
+      letter-spacing: 0.14em;
+      margin-top: 6px;
+    }
+
+    /* Middle Vertical Navigation Tabs (5 Items) */
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0;
+    }
+
+    .nav-tab {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 15px 22px;
+      border: none;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.65);
+      background: transparent;
+      color: var(--slate-400);
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-tab svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--slate-400);
+      transition: color 0.18s ease;
+    }
+
+    .nav-tab:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: var(--white);
+    }
+
+    .nav-tab:hover svg {
+      color: var(--glow-sky);
+    }
+
+    .nav-tab.active {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+    }
+
+    .nav-tab.active svg {
+      color: var(--glow-sky);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--glow-sky);
+      box-shadow: -2px 0 12px rgba(56, 189, 248, 0.65);
+    }
+
+    /* Bottom-Left 2x2 Square-Corner Action Grid with 2x Light-Gray Icons */
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(30, 41, 59, 0.9);
+      background-color: rgba(8, 13, 25, 0.35);
+    }
+
+    .sidebar-grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .grid-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 76px;
+      padding: 10px 8px;
+      border-radius: 0;
+      border: 1px solid rgba(51, 65, 85, 0.85);
+      background-color: rgba(30, 41, 59, 0.55);
+      color: var(--slate-300);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .grid-action-btn svg {
+      width: 38px;
+      height: 38px;
+      color: var(--slate-300);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .grid-action-btn:hover {
+      background-color: rgba(51, 65, 85, 0.85);
+      border-color: var(--glow-sky);
+      color: var(--white);
+    }
+
+    .grid-action-btn:hover svg {
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       4. MOBILE RESPONSIVE TOP HEADER + PILL TABS (< 960px)
+       ========================================================================= */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 70;
+      background-color: var(--navy-900);
+      color: var(--white);
+      border-bottom: 1px solid var(--slate-800);
+    }
+
+    .mobile-brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+    }
+
+    .mobile-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .mobile-sub {
+      font-size: 0.9rem;
+      color: var(--slate-300);
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    .mobile-pills {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 0 16px 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-pill-tab {
+      flex: 0 0 auto;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--slate-700);
+      background-color: var(--slate-800);
+      color: var(--slate-300);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .mobile-pill-tab.active {
+      background-color: var(--medtech-600);
+      border-color: var(--medtech-500);
+      color: var(--white);
+    }
+
+    /* =========================================================================
+       5. RIGHT COOL SLATE STAGE & 0.35s SLIDING WHITE DOCUMENT PANELS
+       ========================================================================= */
+    .stage {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      background-color: var(--slate-300);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .page-panel {
+      display: none;
+      min-height: 100vh;
+      background-color: var(--white);
+      box-shadow: -14px 0 36px rgba(15, 23, 42, 0.14);
+    }
+
+    .page-panel.active {
+      display: block;
+    }
+
+    .page-panel.slide-enter {
+      animation: slideSheetIn 0.35s cubic-bezier(0.22, 0.65, 0.36, 1) forwards;
+    }
+
+    @keyframes slideSheetIn {
+      from {
+        opacity: 0.35;
+        transform: translateX(72px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Top Light Slate Banner with Downward Center Triangle Pointer */
+    .banner-top {
+      position: relative;
+      background-color: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+      padding: 46px 48px 50px;
+    }
+
+    .banner-top::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -13px;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 13px solid var(--slate-50);
+      filter: drop-shadow(0 2px 1px rgba(15, 23, 42, 0.06));
+      z-index: 2;
+    }
+
+    .banner-centered {
+      text-align: center;
+      padding: 40px 48px 42px;
+    }
+
+    .sheet-banner-title {
+      margin: 0;
+      font-size: 2.35rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      line-height: 1.2;
+    }
+
+    .content-band {
+      background-color: var(--white);
+      padding: 46px 48px 68px;
+    }
+
+    .container-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      margin: 0 0 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 1.48rem;
+      font-weight: 700;
+      color: var(--navy-900);
+    }
+
+    /* =========================================================================
+       6. PAGE 1 — ABOUT ME (#about): 1.5x PORTRAIT + BIO + SIDE-BY-SIDE TIMELINE
+       ========================================================================= */
+    .about-hero-grid {
+      display: grid;
+      grid-template-columns: 405px minmax(0, 1fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    /* 4:5 Portrait Frame Scaled 1.5x (405px x 507px) */
+    .portrait-card {
+      position: relative;
+      width: 405px;
+      height: 507px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(155deg, #1E293B 0%, #0F172A 100%);
+      border: 1px solid var(--slate-300);
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 46%;
+      display: block;
+    }
+
+    .portrait-placeholder-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 24px;
+      color: var(--slate-400);
+    }
+
+    .portrait-ring {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(148, 163, 184, 0.55);
+      background-color: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--glow-sky);
+    }
+
+    .portrait-tag {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--slate-300);
+    }
+
+    .portrait-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 36px 24px 22px;
+      background: linear-gradient(to top, rgba(8, 13, 25, 0.96) 0%, rgba(15, 23, 42, 0.84) 65%, rgba(15, 23, 42, 0) 100%);
+      color: var(--white);
+    }
+
+    .overlay-name {
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .overlay-details {
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: var(--slate-300);
+    }
+
+    .overlay-details strong {
+      display: block;
+      color: var(--glow-sky);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .bio-heading {
+      margin: 0 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 2.15rem;
+      font-weight: 700;
+      color: var(--navy-900);
+    }
+
+    .bio-paragraphs p {
+      margin: 0 0 16px;
+      font-size: 1.02rem;
+      color: var(--slate-700);
+      line-height: 1.72;
+    }
+
+    .bio-paragraphs strong {
+      color: var(--navy-900);
+      font-weight: 600;
+    }
+
+    .metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .metric-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 6px;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy-900);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    .metric-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--medtech-600);
+    }
+
+    /* Side-by-Side 2-Column Experience & Education Timeline */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px;
+      align-items: start;
+    }
+
+    .tl-entry {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .tl-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Uniform 92px x 52px Two-Tone Badge (Years Only / Degree + Year) */
+    .year-badge {
+      flex: 0 0 92px;
+      width: 92px;
+      height: 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
+      text-align: center;
+    }
+
+    .badge-top {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .badge-bottom {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--medtech-600);
+      color: var(--white);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .tl-card {
+      flex: 1;
+      min-width: 0;
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 13px 16px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    }
+
+    .tl-role {
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .tl-inst {
+      font-size: 0.92rem;
+      color: var(--slate-600);
+      line-height: 1.45;
+    }
+
+    /* =========================================================================
+       7. PAGE 2 — SELECTED PUBLICATIONS (#publications)
+       ========================================================================= */
+    .pub-toolbar,
+    .conf-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--slate-300);
+      background-color: var(--white);
+      color: var(--slate-700);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--medtech-600);
+      color: var(--medtech-600);
+    }
+
+    .filter-btn.active {
+      background-color: var(--navy-900);
+      border-color: var(--navy-900);
+      color: var(--white);
+    }
+
+    .search-wrap,
+    .conf-search-wrap {
+      position: relative;
+      flex: 1 1 260px;
+      min-width: 0;
+      max-width: 380px;
+    }
+
+    .conf-search-wrap {
+      max-width: none;
+    }
+
+    .search-wrap svg,
+    .conf-search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--slate-400);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px 0 38px;
+      border-radius: 999px;
+      border: 1px solid var(--slate-300);
+      background-color: var(--white);
+      color: var(--slate-800);
+      font-size: 14.5px;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--medtech-600);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .results-caption {
+      font-size: 13.5px;
+      color: var(--slate-500);
+      margin-bottom: 18px;
+    }
+
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pub-card {
+      position: relative;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 18px 68px 18px 22px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .pub-card:hover {
+      border-color: var(--slate-300);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
+    }
+
+    .pub-title {
+      margin: 0 0 8px;
+      font-size: 1.06rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.42;
+    }
+
+    .pub-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tag-journal {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background-color: var(--medtech-50);
+      border: 1px solid var(--medtech-100);
+      color: var(--medtech-600);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag-first-author {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pub-venue-text {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .pub-authors {
+      font-size: 0.9rem;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+
+    .pub-authors strong {
+      color: var(--navy-900);
+      font-weight: 700;
+    }
+
+    .pub-actions {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doi-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.14);
+    }
+
+    .doi-btn:hover {
+      background-color: var(--medtech-600);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       8. PAGE 3 — PATENTS & AWARDS (#patents)
+       ========================================================================= */
+    .patents-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 42px;
+    }
+
+    .patent-card {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-left: 4px solid var(--medtech-600);
+      border-radius: 8px;
+      padding: 18px 22px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    }
+
+    .patent-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background-color: var(--medtech-50);
+      border: 1px solid var(--medtech-100);
+      color: var(--medtech-600);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .patent-title {
+      font-size: 1.06rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .patent-inventors {
+      font-size: 0.92rem;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+
+    .patent-inventors strong {
+      color: var(--navy-900);
+      font-weight: 700;
+    }
+
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .award-card {
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .award-year {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .award-title {
+      font-size: 1.04rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.38;
+      margin-bottom: 6px;
+    }
+
+    .award-org {
+      font-size: 0.9rem;
+      color: var(--slate-600);
+      line-height: 1.45;
+    }
+
+    /* =========================================================================
+       9. PAGE 4 — CONFERENCES & EDITORIAL SERVICE (#conferences)
+       ========================================================================= */
+    .service-header-block {
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--slate-200);
+      padding-bottom: 10px;
+    }
+
+    .service-header-block .section-heading {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .verified-reviews-sub {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-500);
+    }
+
+    .journals-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .journal-tab-card {
+      background-color: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-left: 3px solid var(--navy-900);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      transition: border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .journal-tab-card:hover {
+      background-color: var(--white);
+      border-left-color: var(--medtech-600);
+      border-color: var(--slate-300);
+    }
+
+    .journal-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.35;
+    }
+
+    .toggle-conf-btn {
+      flex: 0 0 auto;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--navy-900);
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background-color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .toggle-conf-btn:hover {
+      background-color: var(--medtech-600);
+      border-color: var(--medtech-600);
+    }
+
+    #conf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .conf-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      color: var(--slate-700);
+      line-height: 1.55;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+    }
+
+    .conf-item strong {
+      color: var(--navy-900);
+      font-weight: 600;
+    }
+
+    .year-pill {
+      flex: 0 0 56px;
+      padding: 3px 0;
+      border-radius: 5px;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .conf-award-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background-color: var(--medtech-50);
+      border: 1px solid var(--medtech-100);
+      color: var(--medtech-600);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* =========================================================================
+       10. PAGE 5 — CONTACT INFORMATION (#contact)
+       ========================================================================= */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-bottom: 42px;
+    }
+
+    .contact-card {
+      background-color: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .contact-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background-color: var(--navy-900);
+      color: var(--glow-sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .contact-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--slate-500);
+      margin-bottom: 4px;
+    }
+
+    .contact-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      line-height: 1.5;
+    }
+
+    .copy-email-btn {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--navy-900);
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .copy-email-btn:hover {
+      background-color: var(--medtech-600);
+      border-color: var(--medtech-600);
+    }
+
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .profile-link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background-color: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 18px 20px;
+      color: var(--navy-900);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    }
+
+    .profile-link-card:hover {
+      border-color: var(--medtech-600);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       11. TOAST NOTIFICATION & VISIBILITY UTILITIES
+       ========================================================================= */
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 90;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background-color: var(--navy-900);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hidden,
+    .is-collapsed {
+      display: none !important;
+    }
+
+    /* =========================================================================
+       12. RESPONSIVE BREAKPOINTS
+       ========================================================================= */
+    @media (max-width: 1180px) {
+      .about-hero-grid {
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 28px;
+      }
+
+      .portrait-card {
+        width: 320px;
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        display: none;
+      }
+
+      .mobile-header {
+        display: block;
+      }
+
+      .stage {
+        margin-left: 0;
+      }
+
+      .about-hero-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .portrait-card {
+        width: 100%;
+        max-width: 360px;
+        height: 450px;
+      }
+
+      .timeline-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .awards-grid,
+      .journals-grid-3col,
+      .profiles-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .banner-top {
+        padding: 32px 20px 36px;
+      }
+
+      .content-band {
+        padding: 32px 20px 54px;
+      }
+
+      .sheet-banner-title {
+        font-size: 1.85rem;
+      }
+
+      .awards-grid,
+      .journals-grid-3col,
+      .contact-grid,
+      .profiles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pub-card {
+        padding: 16px 58px 16px 16px;
+      }
+
+      .pub-actions {
+        right: 14px;
+        bottom: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================= -->
+  <!-- 1. LEFT FIXED NAVIGATION SIDEBAR (276px WIDE)                           -->
+  <!-- ======================================================================= -->
+  <aside class="sidebar" aria-label="Primary Sidebar Navigation">
+    <div>
+      <!-- Top-Left Name Only (Doubled top spacing) -->
+      <div class="sidebar-profile">
+        <div class="sidebar-name-en">Chen, Chen-Yu</div>
+        <div class="sidebar-name-zh">&#38515;&#38663;&#23431;</div>
+      </div>
+
+      <!-- Middle Vertical Navigation Tabs (5 Tabs) -->
+      <nav class="sidebar-nav" role="tablist" aria-label="Portfolio Sections">
+        <button type="button" role="tab" class="nav-tab active" data-tab="about" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>About me</span>
+        </button>
+
+        <button type="button" role="tab" class="nav-tab" data-tab="publications" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>Selected Publications</span>
+        </button>
+
+        <button type="button" role="tab" class="nav-tab" data-tab="patents" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="6"></circle>
+            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+          </svg>
+          <span>Patents &amp; Awards</span>
+        </button>
+
+        <button type="button" role="tab" class="nav-tab" data-tab="conferences" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span>Conferences &amp; Service</span>
+        </button>
+
+        <button type="button" role="tab" class="nav-tab" data-tab="contact" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span>Contact Information</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Bottom-Left 2x2 Square-Corner Button Grid with 2x Light-Gray Icons -->
+    <div class="sidebar-footer">
+      <div class="sidebar-grid-2x2">
+        <a href="https://scholar.google.com/citations?user=Uvku4xgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="grid-action-btn" aria-label="Google Scholar">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+          </svg>
+          <span>Scholar</span>
+        </a>
+
+        <a href="https://orcid.org/0000-0001-6500-6970" target="_blank" rel="noopener noreferrer" class="grid-action-btn" aria-label="ORCID">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM8.3 17H6.7V9.4h1.6zm-.8-8.7a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm9.8 5.1c0 2.3-1.6 3.6-4.1 3.6H10V9.4h3.3c2.5 0 4 1.3 4 4zm-1.6 0c0-1.6-1-2.5-2.5-2.5h-1.6v4.9h1.6c1.5 0 2.5-.9 2.5-2.4z"/>
+          </svg>
+          <span>ORCID</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/chen-chenyu/" target="_blank" rel="noopener noreferrer" class="grid-action-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+
+        <button type="button" class="grid-action-btn" data-tab="contact" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span>Email</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================================= -->
+  <!-- RESPONSIVE MOBILE TOP BAR + PILL NAV (< 960px)                          -->
+  <!-- ======================================================================= -->
+  <header class="mobile-header">
+    <div class="mobile-brand-bar">
+      <div>
+        <span class="mobile-title">Chen, Chen-Yu</span>
+        <span class="mobile-sub">&#38515;&#38663;&#23431;</span>
+      </div>
+    </div>
+    <nav class="mobile-pills" role="tablist" aria-label="Mobile Portfolio Navigation">
+      <button type="button" role="tab" class="mobile-pill-tab active" data-tab="about">About me</button>
+      <button type="button" role="tab" class="mobile-pill-tab" data-tab="publications">Selected Publications</button>
+      <button type="button" role="tab" class="mobile-pill-tab" data-tab="patents">Patents &amp; Awards</button>
+      <button type="button" role="tab" class="mobile-pill-tab" data-tab="conferences">Conferences &amp; Service</button>
+      <button type="button" role="tab" class="mobile-pill-tab" data-tab="contact">Contact Information</button>
+    </nav>
+  </header>
+
+  <!-- ======================================================================= -->
+  <!-- 2. RIGHT COOL SLATE STAGE & SLIDING WHITE DOCUMENT SHEETS               -->
+  <!-- ======================================================================= -->
+  <main class="stage" id="stage">
+
+    <!-- ===================================================================== -->
+    <!-- PAGE 1 — ABOUT ME (#about)                                            -->
+    <!-- ===================================================================== -->
+    <section id="panel-about" class="page-panel active" data-tab="about" role="tabpanel">
+      <div class="banner-top">
+        <div class="container-inner about-hero-grid">
+          <!-- Left: 4:5 Portrait Frame Scaled 1.5x (405px x 507px) -->
+          <div class="portrait-card">
+            <img
+              id="hero-portrait-img"
+              src="20260711-DSC_1616-12.jpg"
+              alt="Chen-Yu Chen, Ph.D."
+              data-fallbacks="20260711-DSC_1616-12.JPG|20260711-DSC_1616-12.jpeg|20260711-DSC_1616-12.JPEG|20260711-DSC_1616-12.png|20260711-DSC_1616-12.jpg.jpg"
+              onerror="var list=(this.getAttribute('data-fallbacks')||'').split('|').filter(Boolean); if(list.length){ var next=list.shift(); this.setAttribute('data-fallbacks', list.join('|')); this.src=next; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }"
+            />
+            <div class="portrait-placeholder-body" style="display: none;" aria-hidden="true">
+              <div class="portrait-ring">
+                <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <span class="portrait-tag">4:5 Portrait Placeholder</span>
+            </div>
+
+            <div class="portrait-overlay">
+              <div class="overlay-name">Chen-Yu Chen, Ph.D.</div>
+              <div class="overlay-details">
+                <strong>Staff Research Engineer</strong>
+                Robert E. Fischell Institute for Biomedical Devices, University of Maryland
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Bio Heading + 2 Concise Paragraphs -->
+          <div>
+            <h1 class="bio-heading">Bio</h1>
+            <div class="bio-paragraphs">
+              <p>
+                <strong>Chen-Yu Chen, Ph.D.</strong> is a Staff Research Engineer at the Robert E. Fischell Institute for Biomedical Devices and the Fischell Department of Bioengineering at the University of Maryland, College Park. His research centers on bioelectronics, redox-based electrochemical biosensing, and 3D-printed organ-on-a-chip and microfluidic systems for real-time biomanufacturing process analytical technology (PAT) and bidirectional electronic interrogation of living cells.
+              </p>
+              <p>
+                Bridging academic microsystem innovation with translational biotech R&amp;D, Dr. Chen has authored 21 peer-reviewed journal publications and 3 US patent applications across electrode biofabrication, spectroelectrochemistry, and microphysiological platforms. Prior to his work at UMD and Cornell University, he led GMP/cGMP clinical-analytical method development, CMC scale-up, and FDA/EMA regulatory submissions for liposomal drug formulations at TLC BioSciences.
+              </p>
+            </div>
+
+            <div class="metrics-row">
+              <span class="metric-pill"><span class="metric-dot"></span>21 Peer-Reviewed Publications</span>
+              <span class="metric-pill"><span class="metric-dot"></span>394 Citations (h-index: 12)</span>
+              <span class="metric-pill"><span class="metric-dot"></span>3 US Patent Applications</span>
+              <span class="metric-pill"><span class="metric-dot"></span>90+ Journal Peer Reviews</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-band">
+        <div class="container-inner timeline-grid">
+          <!-- Left Column: Professional Experience (Years Only, Uniform 92x52 Badges, Zero Descriptions) -->
+          <div>
+            <h2 class="section-heading">Professional Experience</h2>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">Present</div>
+                <div class="badge-bottom">2023</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Staff Research Engineer</div>
+                <div class="tl-inst">Robert E. Fischell Institute for Biomedical Devices / UMD &mdash; Bioengineering, College Park, MD</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">2023</div>
+                <div class="badge-bottom">2017</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Graduate Research Assistant &amp; Teaching Assistant</div>
+                <div class="tl-inst">University of Maryland &mdash; Department of Bioengineering, College Park, MD</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">2017</div>
+                <div class="badge-bottom">2016</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Graduate Research Assistant</div>
+                <div class="tl-inst">Cornell University / Guthrie Clinic, Ithaca, NY</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">2016</div>
+                <div class="badge-bottom">2013</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Assistant Researcher</div>
+                <div class="tl-inst">TLC BioSciences, Taipei, Taiwan</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">2013</div>
+                <div class="badge-bottom">2011</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Graduate Research Assistant</div>
+                <div class="tl-inst">National Tsing Hua University, Hsinchu, Taiwan</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Education (Degree + Graduation Year in Uniform 92x52 Two-Tone Badges) -->
+          <div>
+            <h2 class="section-heading">Education</h2>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">Ph.D.</div>
+                <div class="badge-bottom">2023</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">Ph.D. in Bioengineering</div>
+                <div class="tl-inst">University of Maryland, College Park, MD</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">M.Eng.</div>
+                <div class="badge-bottom">2017</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">M.Eng. in Biomedical Engineering</div>
+                <div class="tl-inst">Cornell University, Ithaca, NY</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">M.S.</div>
+                <div class="badge-bottom">2013</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">M.S. in Biomedical Engineering and Environmental Sciences</div>
+                <div class="tl-inst">National Tsing Hua University, Hsinchu, Taiwan</div>
+              </div>
+            </div>
+
+            <div class="tl-entry">
+              <div class="year-badge">
+                <div class="badge-top">B.S.</div>
+                <div class="badge-bottom">2010</div>
+              </div>
+              <div class="tl-card">
+                <div class="tl-role">B.S. in Biomedical Engineering and Environmental Sciences</div>
+                <div class="tl-inst">National Tsing Hua University, Hsinchu, Taiwan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PAGE 2 — SELECTED PUBLICATIONS (#publications)                        -->
+    <!-- ===================================================================== -->
+    <section id="panel-publications" class="page-panel" data-tab="publications" role="tabpanel">
+      <div class="banner-top banner-centered">
+        <div class="container-inner">
+          <h1 class="sheet-banner-title">Selected Publications</h1>
+        </div>
+      </div>
+
+      <div class="content-band">
+        <div class="container-inner">
+          <h2 class="section-heading">Peer-Reviewed Publications</h2>
+
+          <!-- Non-Overlapping Flexbox Filter & Search Toolbar -->
+          <div class="pub-toolbar">
+            <div class="filter-chips" role="group" aria-label="Filter publications by year">
+              <button type="button" class="filter-btn active" data-filter="all">All (21)</button>
+              <button type="button" class="filter-btn" data-filter="2025-2026">2025&ndash;2026 (6)</button>
+              <button type="button" class="filter-btn" data-filter="2023-2024">2023&ndash;2024 (5)</button>
+              <button type="button" class="filter-btn" data-filter="2015-2022">2015&ndash;2022 (10)</button>
+            </div>
+
+            <div class="search-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="pub-search-input" class="search-input" placeholder="Search title, journal, author..." aria-label="Search publications" />
+            </div>
+          </div>
+
+          <div class="results-caption" id="pub-results-caption">Showing 21 of 21 peer-reviewed publications</div>
+
+          <!-- All 21 Peer-Reviewed Publications -->
+          <div class="pub-list" id="pub-list">
+            <!-- 1 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">Mediated Electrochemical Probing and Machine Learning for Cysteine and Reduced Monoclonal Antibody Quantification (2026)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Biotechnology and Bioengineering (2026)</span>
+              </div>
+              <div class="pub-authors">K. Chun, V. Kochar, E. Jaskowiak, <strong>C.-Y. Chen</strong>, D. Muthusamy, D. Motabar, E. Kim, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/bit.70174" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/bit.70174" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 2 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">Programable and Spatially Conforming Assembly of Engineered Living Materials Onto Electrodes via Redox (2026)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">First Author</span>
+                <span class="pub-venue-text">Small Science (2026)</span>
+              </div>
+              <div class="pub-authors"><strong>C.-Y. Chen</strong>, M.J. Chu, F.R. Zakaria, E. Kim, D. Muthusamy, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/smsc.70331" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/smsc.70331" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 3 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">Electrochemistry as a Tool for Redox-Based Bio-Information Processing (2025)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Advanced Science 12(36), e10184 (2025)</span>
+              </div>
+              <div class="pub-authors">E. Kim, <strong>C.-Y. Chen</strong>, F.R. Zakaria, D. Motabar, M. Kang, D.L. Kelly, A. Napolitano, W.E. Bentley, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/advs.202510184" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/advs.202510184" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 4 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">3D Printed Spectroelectrochemical Platform for Redox-based Bioelectronics (2025)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">First Author</span>
+                <span class="pub-venue-text">Small Methods 9(8), 2401843 (2025)</span>
+              </div>
+              <div class="pub-authors"><strong>C.-Y. Chen</strong>, E. Kim, F.R. Zakaria, M.J. Chu, B. Wu, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/smtd.202401843" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/smtd.202401843" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 5 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">3D Nanoprinting of PDMS Microvessels with Tailored Tortuosity and Microporosity via Direct Laser Writing (2025)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Lab on a Chip 25, 2249&ndash;2262 (2025)</span>
+              </div>
+              <div class="pub-authors">X. Xu, Y. Qiu, <strong>C.-Y. Chen</strong>, M. Carton, P.M.R. Campbell, A.M. Chowdhury, B.C. Bandyopadhyay, W.E. Bentley, B.R. Smith, R.D. Sochol</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1039/D4LC01051E" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1039/D4LC01051E" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 6 -->
+            <article class="pub-card" data-era="2025-2026">
+              <h3 class="pub-title">Proline-Selective Electrochemiluminescence Detecting a Single Amino Acid Variation Between A1 and A2 &beta;-Casein Containing Milks (2025)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Advanced Science 12(6), 2411956 (2025)</span>
+              </div>
+              <div class="pub-authors">E. Kim, <strong>C.-Y. Chen</strong>, M.J. Chu, M.F. Hamstra, W.E. Bentley, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/advs.202411956" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/advs.202411956" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 7 -->
+            <article class="pub-card" data-era="2023-2024">
+              <h3 class="pub-title">Electrobiofabrication of antibody sensor interfaces within a 3D printed device yield rapid and robust electrochemical measurements of titer and glycan structure (2024)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">First Author</span>
+                <span class="pub-venue-text">Biotechnology and Bioengineering 121(12), 3754&ndash;3767 (2024)</span>
+              </div>
+              <div class="pub-authors"><strong>C.-Y. Chen</strong>, D. Motabar, F.R. Zakaria, E. Kim, B. Wu, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/bit.28839" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/bit.28839" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 8 -->
+            <article class="pub-card" data-era="2023-2024">
+              <h3 class="pub-title">Redox-mediated Biomolecular information transfer in single electrogenetic biological cells (2024)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Biosensors and Bioelectronics 262, 116546 (2024)</span>
+              </div>
+              <div class="pub-authors">D. Kaufman, <strong>C.-Y. Chen</strong>, C.-Y. Tsao, Z. Zhao, A. Lavon, G.F. Payne, W.E. Bentley, H. Ben-Yoav</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1016/j.bios.2024.116546" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1016/j.bios.2024.116546" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 9 -->
+            <article class="pub-card" data-era="2023-2024">
+              <h3 class="pub-title">Redox active plant phenolic, acetosyringone, for electrogenetic signaling (2024)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Scientific Reports 14, 9666 (2024)</span>
+              </div>
+              <div class="pub-authors">F.R. Zakaria, <strong>C.-Y. Chen</strong>, J. Li, S. Wang, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1038/s41598-024-60160-0" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1038/s41598-024-60160-0" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 10 -->
+            <article class="pub-card" data-era="2023-2024">
+              <h3 class="pub-title">Redox-enabled Electronic Interrogation and Feedback Control of Hierarchical and Networked Biological Systems (2023)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">Co-First Author</span>
+                <span class="pub-venue-text">Nature Communications 14, 8514 (2023)</span>
+              </div>
+              <div class="pub-authors">S. Wang, <strong>C.-Y. Chen</strong>, J.R. Rzasa, C.-Y. Tsao, J. Li, E. VanArsdale, E. Kim, F.R. Zakaria, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1038/s41467-023-44223-w" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1038/s41467-023-44223-w" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 11 -->
+            <article class="pub-card" data-era="2023-2024">
+              <h3 class="pub-title">Operando Spectroelectrochemical Characterization Shows that the Dynamic Flow of Electrons through Melanin Involves Its Redox-State Switching (2023)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">The Journal of Physical Chemistry C 127(40), 19979&ndash;19994 (2023)</span>
+              </div>
+              <div class="pub-authors">E. Kim, <strong>C.-Y. Chen</strong>, J.W. Phua, A. Napolitano, W.E. Bentley, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1021/acs.jpcc.3c05026" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1021/acs.jpcc.3c05026" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 12 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Characterizing Electron Flow through Catechol-Graphene Composite Hydrogels (2022)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Advanced Materials Interfaces 9(36), 2202021 (2022)</span>
+              </div>
+              <div class="pub-authors">E. Kim, R. Argenziano, Z. Zhao, <strong>C.-Y. Chen</strong>, M. Shen, W.E. Bentley, A. Napolitano, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/admi.202202021" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/admi.202202021" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 13 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Enhanced electrochemical measurement of &beta;-galactosidase activity in whole cells by coexpression of lactose permease, LacY (2022)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">BioTechniques 73(5), 251&ndash;255 (2022)</span>
+              </div>
+              <div class="pub-authors">E. VanArsdale, J. Pitzer, S. Wang, K. Stephens, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.2144/btn-2022-0090" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.2144/btn-2022-0090" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 14 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Electrogenetic Signal Transmission and Propagation in Coculture to Guide Production of a Small Molecule, Tyrosine (2022)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">ACS Synthetic Biology 11(2), 877&ndash;887 (2022)</span>
+              </div>
+              <div class="pub-authors">E. VanArsdale, J. Pitzer, S. Wang, K. Stephens, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1021/acssynbio.1c00522" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1021/acssynbio.1c00522" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 15 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">System-level Network Analysis of a Catechol Component for Redox Bioelectronics (2022)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">ACS Applied Electronic Materials 4(5), 2490&ndash;2501 (2022)</span>
+              </div>
+              <div class="pub-authors">Z. Zhao, S. Wu, E. Kim, <strong>C.-Y. Chen</strong>, J.R. Rzasa, X. Shi, W.E. Bentley, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1021/acsaelm.2c00269" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1021/acsaelm.2c00269" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 16 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Orthogonal redox and optical stimuli can induce independent responses for catechol-chitosan films (2022)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Materials Chemistry Frontiers 6, 1253&ndash;1260 (2022)</span>
+              </div>
+              <div class="pub-authors">Z. Zhao, E. Kim, <strong>C.-Y. Chen</strong>, J.R. Rzasa, Q. Zhang, J. Li, Y. Tao, W.E. Bentley, J.-P. Lumb, B. Kohler, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1039/D2QM00106C" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1039/D2QM00106C" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 17 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Catechol-based molecular memory film for redox linked bioelectronics (2020)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Advanced Electronic Materials 6(10), 2000452 (2020)</span>
+              </div>
+              <div class="pub-authors">S. Wu, E. Kim, <strong>C.-Y. Chen</strong>, J. Li, E. VanArsdale, C. Grieco, B. Kohler, W.E. Bentley, X. Shi, G.F. Payne</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/aelm.202000452" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/aelm.202000452" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 18 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Multi-organ Microfluidic Platform with Breathable Lung Chamber for Inhalation or Intravenous Drug Screening and Development (2020)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">Co-First Author</span>
+                <span class="pub-venue-text">Biotechnology and Bioengineering 117(2), 486&ndash;497 (2020)</span>
+              </div>
+              <div class="pub-authors">P.G. Miller, <strong>C.-Y. Chen</strong>, Y.I. Wang, E. Gao, M.L. Shuler</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1002/bit.27188" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1002/bit.27188" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 19 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Chip modularity enables molecular information access from organ-on-chip devices with quality control (2019)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">Sensors and Actuators B: Chemical 295, 30&ndash;39 (2019)</span>
+              </div>
+              <div class="pub-authors">W. Shang, <strong>C.-Y. Chen</strong>, K. Lo, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1016/j.snb.2019.05.030" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1016/j.snb.2019.05.030" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 20 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Redox-based synthetic biology enables electrochemical detection of the herbicides dicamba and Roundup&trade; via rewired Escherichia coli (2019)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="pub-venue-text">ACS Sensors 4(5), 1180&ndash;1184 (2019)</span>
+              </div>
+              <div class="pub-authors">E. VanArsdale, C.-Y. Tsao, Y. Liu, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1021/acssensors.9b00085" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1021/acssensors.9b00085" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+
+            <!-- 21 -->
+            <article class="pub-card" data-era="2015-2022">
+              <h3 class="pub-title">Using Copper Ions to Amplify ROS-Mediated Fluorescence for Continuous Online Monitoring of Extracellular Glucose in Living Rat Brain (2015)</h3>
+              <div class="pub-meta-row">
+                <span class="tag-journal">Journal Article</span>
+                <span class="tag-first-author">First Author</span>
+                <span class="pub-venue-text">Biosensors and Bioelectronics 64, 535&ndash;541 (2015)</span>
+              </div>
+              <div class="pub-authors"><strong>C.-Y. Chen</strong>, C.-K. Su, P.-J. Tseng, Y.-C. Sun</div>
+              <div class="pub-actions">
+                <a href="https://doi.org/10.1016/j.bios.2014.09.091" target="_blank" rel="noopener noreferrer" class="doi-btn" title="Open DOI: 10.1016/j.bios.2014.09.091" aria-label="Open DOI link">&nearr;</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PAGE 3 — PATENTS & AWARDS (#patents)                                  -->
+    <!-- ===================================================================== -->
+    <section id="panel-patents" class="page-panel" data-tab="patents" role="tabpanel">
+      <div class="banner-top banner-centered">
+        <div class="container-inner">
+          <h1 class="sheet-banner-title">Patents &amp; Awards</h1>
+        </div>
+      </div>
+
+      <div class="content-band">
+        <div class="container-inner">
+          <h2 class="section-heading">US Patent Applications (3)</h2>
+          <div class="patents-stack">
+            <div class="patent-card">
+              <span class="patent-badge">US Patent Application No. 2026/0016440 A1</span>
+              <div class="patent-title">Bobble Stat</div>
+              <div class="patent-inventors">J.R. Rzasa, Q. Burke, J. Chen, <strong>C.-Y. Chen</strong>, W.E. Bentley, G.F. Payne, R. Ghodssi</div>
+            </div>
+
+            <div class="patent-card">
+              <span class="patent-badge">US Patent Application No. 2024/0241115 A1</span>
+              <div class="patent-title">System, Devices, and Methods for Measuring Antibody Titer and Glycosylation</div>
+              <div class="patent-inventors"><strong>C.-Y. Chen</strong>, W.E. Bentley, D. Motabar, J. Li, S. Wang, C.-Y. Tsao, G.F. Payne</div>
+            </div>
+
+            <div class="patent-card">
+              <span class="patent-badge">US Patent Application No. 2023/0332087 A1</span>
+              <div class="patent-title">Systems, Devices, and Methods for Closed-Loop Bioelectronic Control</div>
+              <div class="patent-inventors">J.R. Rzasa, S. Wang, <strong>C.-Y. Chen</strong>, C.-Y. Tsao, W.E. Bentley</div>
+            </div>
+          </div>
+
+          <h2 class="section-heading">Honors &amp; Awards</h2>
+          <div class="awards-grid">
+            <div class="award-card">
+              <span class="award-year">2025</span>
+              <div class="award-title">IEEE MEMS 2025 Outstanding Paper Award Winner</div>
+              <div class="award-org">IEEE International Conference on Micro Electro Mechanical Systems</div>
+            </div>
+
+            <div class="award-card">
+              <span class="award-year">2023</span>
+              <div class="award-title">Taiwan Government Scholarship for Study Abroad</div>
+              <div class="award-org">Ministry of Education, Taiwan ($30,000 USD across 2 years)</div>
+            </div>
+
+            <div class="award-card">
+              <span class="award-year">2022</span>
+              <div class="award-title">2nd Place Best Research Award</div>
+              <div class="award-org">Advanced Mammalian Biomanufacturing Innovation Center (AMBIC) Conference</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PAGE 4 — CONFERENCES & EDITORIAL SERVICE (#conferences)               -->
+    <!-- ===================================================================== -->
+    <section id="panel-conferences" class="page-panel" data-tab="conferences" role="tabpanel">
+      <div class="banner-top banner-centered">
+        <div class="container-inner">
+          <h1 class="sheet-banner-title">Conferences &amp; Editorial Service</h1>
+        </div>
+      </div>
+
+      <div class="content-band">
+        <div class="container-inner">
+          <!-- Editorial & Peer Review Service -->
+          <div class="service-header-block">
+            <h2 class="section-heading">Editorial &amp; Peer Review Service</h2>
+            <span class="verified-reviews-sub">90+ Verified Reviews</span>
+          </div>
+
+          <div class="journals-grid-3col">
+            <div class="journal-tab-card"><div class="journal-name">Biosensors and Bioelectronics</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Biosensors and Bioelectronics: X</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Lab on a Chip</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Materials Horizons</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Sensors and Actuators B: Chemical</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Microchimica Acta</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Analyst</div></div>
+            <div class="journal-tab-card"><div class="journal-name">Sensing and Bio-Sensing Research</div></div>
+            <div class="journal-tab-card"><div class="journal-name">SLAS Technology</div></div>
+          </div>
+
+          <!-- Conference Presentations (28) -->
+          <h2 class="section-heading">Conference Presentations</h2>
+
+          <div class="conf-toolbar">
+            <div class="conf-search-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="conf-search-input" class="search-input" placeholder="Search venue, year, topic..." aria-label="Search conference presentations" />
+            </div>
+            <button type="button" id="toggle-conf-btn" class="toggle-conf-btn" aria-expanded="false">Show All 28 Presentations</button>
+          </div>
+
+          <div class="results-caption" id="conf-results-caption">Showing 8 featured of 28 conference presentations</div>
+
+          <div id="conf-list">
+            <div class="conf-item"><span class="year-pill">2026</span><div><strong>C.-Y. Chen</strong>, X. Xu, R.D. Sochol, W.E. Bentley, &ldquo;Programmable and rapid multi-cell seeding on 3D microprinted scaffolds for organ-on-a-chip systems,&rdquo; <strong>ACS BIOT</strong>, Atlanta, GA, 2026.</div></div>
+            <div class="conf-item"><span class="year-pill">2026</span><div><strong>C.-Y. Chen</strong>, E. Kim, F. Zakaria, M. Chu, B. Wu, G.F. Payne, W.E. Bentley, &ldquo;3D-Printed spectroelectrochemical tools for redox-based antibody, protein, and biomaterial analysis,&rdquo; <strong>ACS BIOT</strong>, Atlanta, GA, 2026.</div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div><strong>C.-Y. Chen</strong>, X. Xu, R.D. Sochol, W.E. Bentley, &ldquo;3D-Microprinted Microfluidic Scaffolds and the Rapid Seeding Strategy for Organ-on-a-Chip Applications,&rdquo; <strong>IEEE MEMS 2025</strong> <span class="conf-award-badge">Outstanding Paper Award Winner</span></div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div>B. Wu, M.J. Chu, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley, &ldquo;Data-driven Classification of electrochemical sensing for robust assessment of Biomolecular information,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2025.</div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div>F.R. Zakaria, M.J. Chu, <strong>C.-Y. Chen</strong>, Y. Liu, C.-Y. Tsao, E. Jaskowiak, G.F. Payne, W.E. Bentley, &ldquo;Enhancing electronic control of microbial gene expression by identifying and multiplexing redox-responsive promoters,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2025.</div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div>F.O. Aljirafi, S. Wang, E. Kim, J. Li, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley, &ldquo;Smart materials to guide cellular redox activity,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2025.</div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div>M.J. Chu, F.O. Aljirafi, D. Muthusamy, B. Wu, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley, &ldquo;Coordinating and interrogating intercellular communication in engineered microbial consortia using electrochemical methods,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2025.</div></div>
+            <div class="conf-item"><span class="year-pill">2025</span><div>E. Kim, H. Dahodwala, S.H.B. Kolanupaka, <strong>C.-Y. Chen</strong>, M.J. Chu, M.F. Hamstra, W.E. Bentley, G.F. Payne, &ldquo;Electrochemiluminescence: A Potential Process Analytical Technology for Real-Time Monitoring,&rdquo; <strong>AMBIC Winter Conference 2025</strong>, 2025.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2025</span><div>G. Liang, K. Chun, D. Muthusamy, <strong>C.-Y. Chen</strong>, E. Ma, R. Walk, S. Yoon, P. Hauk, M. Betenbaugh, W.E. Bentley, &ldquo;A sensing and switchable cell line toggles between proliferation and production modes,&rdquo; <strong>AMBIC Winter Conference 2025</strong>, 2025.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2025</span><div>F.R. Zakaria, <strong>C.-Y. Chen</strong>, E. Jaskowiak, S.P. Wang, J. Li, G.F. Payne, W.E. Bentley, &ldquo;Biocompatible materials for electrode-localized electrogenetic cell signaling,&rdquo; <strong>2025 5th Annual Mid-Atlantic Synthetic Biology Symposium</strong>, 2025.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2024</span><div>X. Xu, <strong>C.-Y. Chen</strong> (co-first author), Z. Wen, O.M. Young, B.M. Felix, B.C. Bandyopadhyay, W.E. Bentley, R.D. Sochol, &ldquo;3D-Microprinted PDMS-Based Microfluidic Vessels For Organ-on-a-Chip Applications,&rdquo; <strong>IEEE MEMS 2024</strong>, 2024.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2024</span><div>J. Chen, Q. Burke, <strong>C.-Y. Chen</strong>, J.R. Rzasa, W.E. Bentley, &ldquo;Optimization of Sensing and Actuation Capabilities of PCB-based Electrodes,&rdquo; <strong>Biomedical Engineering Society (BMES) Annual Meeting 2024</strong>, 2024.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2023</span><div>D. Motabar, <strong>C.-Y. Chen</strong> (co-first author), J. Li, S. Wang, C.-Y. Tsao, X. Tong, L.X. Wang, G.F. Payne, W.E. Bentley, &ldquo;Near Real Time Assessment of mAb Titer &amp; Sialic Acid and Mannose Glycans,&rdquo; <strong>AMBIC Winter Conference 2023</strong>, Tarrytown, NY, 2023.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2022</span><div>D. Motabar, <strong>C.-Y. Chen</strong> (co-first author), J. Li, S. Wang, C.-Y. Tsao, X. Tong, L.X. Wang, G.F. Payne, W.E. Bentley, &ldquo;Near Real Time Assessment of mAb Titer &amp; Sialic Acid and Mannose Glycans,&rdquo; <strong>AMBIC June 2022 Conference</strong>, Newark, DE, 2022 <span class="conf-award-badge">2nd Best Poster Award</span></div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2022</span><div>O. Young, <strong>C.-Y. Chen</strong> (co-first author), X. Xu, W.E. Bentley, M.D. Fuge, A.I. Krieger, P. Mass, J.P. Kanter, L. Olivieri, R.D. Sochol, &ldquo;3D Microprinting of Multi-Actuator Soft Robots onto 3D-Printed Microfluidic Devices via Ex Situ Direct Laser Writing,&rdquo; <strong>Actuators and Microsystems Workshop (Hilton Head 2022)</strong>, Hilton Head Island, SC, 2022.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2022</span><div>D. Motabar, <strong>C.-Y. Chen</strong> (co-first author), E. VanArsdale, E. Kim, Z. Zhao, J. Li, J. Rzasa, S. Wang, C.-Y. Tsao, K. Chun, F.R. Zakaria, F. Al-Jirafi, J. Stine, R. Ghodssi, G.F. Payne, W.E. Bentley, &ldquo;Bioelectronics &ndash; building tools for the birth of a new industry,&rdquo; <strong>Mid-Atlantic Microelectronics &amp; Heterogeneous Integration Workshop</strong>, College Park, MD, 2022.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2022</span><div><strong>C.-Y. Chen</strong>, G.F. Payne, R. Ghodssi, R.D. Sochol, W.E. Bentley, &ldquo;Development of 3D human gut models with bioelectronics via rapid 3D assembly,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2022.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2022</span><div>F.R. Zakaria, J. Li, <strong>C.-Y. Chen</strong>, G.F. Payne, W.E. Bentley, &ldquo;Tunable electronic control of gene expression in E. coli via plant-derived phenolics,&rdquo; <strong>ACS BIOT</strong>, San Diego, CA, 2022.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2021</span><div>D. Motabar, <strong>C.-Y. Chen</strong>, J. Li, S. Wang, C.-Y. Tsao, X. Tong, L.X. Wang, G.F. Payne, W.E. Bentley, &ldquo;Bioelectronic Sensors for Rapid Assessment of Antibody Titer and Glycan Structure,&rdquo; <strong>AMBIC July 2021 Conference</strong>, Lowell, MA, 2021.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2020</span><div><strong>C.-Y. Chen</strong>, W. Shang, A. Lamont, K. Lo, G.F. Payne, R.D. Sochol, W.E. Bentley, &ldquo;3D-Printed Human Villi-on-a-Chip with Capillary System for Drug Screening and Disease Interrogation,&rdquo; <strong>ACS BIOT</strong>, Virtual, 2020.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2019</span><div><strong>C.-Y. Chen</strong>, E. VanArsdale, J. Li, E. Kim, W. Shang, G.F. Payne, W.E. Bentley, &ldquo;Microsystem Redox Probing: Potential to Reveal Hydrogen Peroxide and Nitric Oxide in Cancer Applications,&rdquo; <strong>NCI-UMD Partnership for Integrative Cancer Research Symposium</strong>, College Park, MD, 2019.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2019</span><div><strong>C.-Y. Chen</strong>, A. Lamont, A. Alsharhand, K. Lo, G.F. Payne, R.D. Sochol, W.E. Bentley, &ldquo;Human Villi-on-a-Chip with Capillary on 3D-Printed Scaffolds,&rdquo; <strong>2019 International Conference on Biofabrication</strong>, Columbus, OH, 2019.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2019</span><div><strong>C.-Y. Chen</strong>, W. Shang, A. Lamont, K. Lo, G.F. Payne, R.D. Sochol, W.E. Bentley, &ldquo;3D-Printed Human Villi-on-a-Chip with Capillary System for Drug Screening and Disease Interrogation,&rdquo; <strong>ACS BIOT</strong>, Orlando, FL, 2019.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2017</span><div><strong>C.-Y. Chen</strong>, E. Gao, Y.I. Wang, P.G. Miller, M.L. Shuler, &ldquo;Multi-Organ Microfluidic Platform with Breathable Lung Chamber for Inhalation Drug Screening and Development,&rdquo; <strong>Organ-on-a-chip World Congress</strong>, Boston, MA, 2017.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2013</span><div><strong>C.-Y. Chen</strong>, Y.-C. Sun, &ldquo;Development of Fenton-like Catalytic Fluorescence Analytical Systems for In-vivo Monitoring Extracellular Brain Glucose,&rdquo; <strong>Analytical Chemistry Technology Conference</strong>, Taipei, Taiwan, 2013.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2013</span><div><strong>C.-Y. Chen</strong>, I.-H. Hsu, Y.-C. Sun, &ldquo;Highly Sensitive and Continuous Determination of Extracellular Glucose Concentration in Mammalian Tissue Using Copper Ion Catalysis Fluorescence System,&rdquo; <strong>PITTCON</strong>, Philadelphia, PA, 2013.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2012</span><div><strong>C.-Y. Chen</strong>, I.-H. Hsu, Y.-H. Liu, Y.-C. Sun, &ldquo;Determination of Mercuric Ion Using Oligonucleotide-Gold Nanoparticle Conjugates and Magnetic Separation Coupled with Colorimetric Detection,&rdquo; <strong>PITTCON</strong>, Orlando, FL, 2012.</div></div>
+            <div class="conf-item is-collapsed"><span class="year-pill">2010</span><div>T.-C. Hsu, <strong>C.-Y. Chen</strong>, I.-H. Hsu, Y.-C. Sun, &ldquo;Determination of Aqueous Mercuric Ion Using Oligonucleotide-Gold Nanoparticle Conjugates Coupled with ET-AAS Detection,&rdquo; <strong>PITTCON</strong>, Orlando, FL, 2010.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PAGE 5 — CONTACT INFORMATION (#contact)                               -->
+    <!-- ===================================================================== -->
+    <section id="panel-contact" class="page-panel" data-tab="contact" role="tabpanel">
+      <div class="banner-top banner-centered">
+        <div class="container-inner">
+          <h1 class="sheet-banner-title">Contact Information</h1>
+        </div>
+      </div>
+
+      <div class="content-band">
+        <div class="container-inner">
+          <div class="contact-grid">
+            <!-- Email Card (Strictly cchen634 [AT] umd.edu, NO phone number anywhere) -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-icon-box" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value" style="font-family: var(--font-mono);">cchen634 [AT] umd.edu</div>
+              </div>
+              <button type="button" id="copy-email-btn" class="copy-email-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy Email</span>
+              </button>
+            </div>
+
+            <!-- Affiliation & Location Card -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-icon-box" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="contact-label">Affiliation &amp; Location</div>
+                <div class="contact-value">
+                  Robert E. Fischell Institute for Biomedical Devices<br />
+                  University of Maryland, College Park, MD
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="section-heading">Academic &amp; Professional Profiles</h2>
+          <div class="profiles-grid">
+            <a href="https://scholar.google.com/citations?user=Uvku4xgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="profile-link-card">
+              <div>
+                <div style="font-weight: 600; font-size: 1rem;">Google Scholar</div>
+                <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--slate-500);">394 Citations &middot; h-index 12</div>
+              </div>
+              <span style="font-weight: 700; color: var(--medtech-600);">&nearr;</span>
+            </a>
+
+            <a href="https://orcid.org/0000-0001-6500-6970" target="_blank" rel="noopener noreferrer" class="profile-link-card">
+              <div>
+                <div style="font-weight: 600; font-size: 1rem;">ORCID</div>
+                <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--slate-500);">0000-0001-6500-6970</div>
+              </div>
+              <span style="font-weight: 700; color: var(--medtech-600);">&nearr;</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/chen-chenyu/" target="_blank" rel="noopener noreferrer" class="profile-link-card">
+              <div>
+                <div style="font-weight: 600; font-size: 1rem;">LinkedIn</div>
+                <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--slate-500);">linkedin.com/in/chen-chenyu</div>
+              </div>
+              <span style="font-weight: 700; color: var(--medtech-600);">&nearr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Banner -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span>Copied cchen634@umd.edu to clipboard</span>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- SELF-CONTAINED VANILLA ES6 JAVASCRIPT CONTROLLER                        -->
+  <!-- ======================================================================= -->
+  <script>
+    (function () {
+      'use strict';
+
+      var TABS = ['about', 'publications', 'patents', 'conferences', 'contact'];
+      var currentTab = 'about';
+      var slideCleanupTimer = null;
+
+      // Equalize all Experience & Education white cards to the tallest card height
+      function equalizeTimelineCards() {
+        var cards = document.querySelectorAll('#panel-about .tl-card');
+        if (!cards.length) {
+          return;
+        }
+        var maxHeight = 0;
+        for (var i = 0; i < cards.length; i++) {
+          cards[i].style.minHeight = '';
+        }
+        for (var j = 0; j < cards.length; j++) {
+          var h = cards[j].offsetHeight;
+          if (h > maxHeight) {
+            maxHeight = h;
+          }
+        }
+        if (maxHeight > 0) {
+          for (var k = 0; k < cards.length; k++) {
+            cards[k].style.minHeight = maxHeight + 'px';
+          }
+        }
+      }
+
+      function switchTab(nextTab, updateUrl) {
+        if (TABS.indexOf(nextTab) === -1) {
+          nextTab = 'about';
+        }
+        currentTab = nextTab;
+
+        if (slideCleanupTimer) {
+          clearTimeout(slideCleanupTimer);
+          slideCleanupTimer = null;
+        }
+
+        // Update desktop sidebar tabs and mobile pill tabs
+        var tabTriggers = document.querySelectorAll('[data-tab]');
+        for (var i = 0; i < tabTriggers.length; i++) {
+          var el = tabTriggers[i];
+          if (el.classList.contains('page-panel')) {
+            continue;
+          }
+          var isMatch = el.getAttribute('data-tab') === nextTab;
+          if (isMatch) {
+            el.classList.add('active');
+            el.setAttribute('aria-selected', 'true');
+          } else {
+            el.classList.remove('active');
+            if (el.hasAttribute('aria-selected')) {
+              el.setAttribute('aria-selected', 'false');
+            }
+          }
+        }
+
+        // Slide-in target white document sheet horizontally from the right (0.35s)
+        var panels = document.querySelectorAll('.page-panel');
+        for (var j = 0; j < panels.length; j++) {
+          var panel = panels[j];
+          panel.classList.remove('active', 'slide-enter');
+          if (panel.getAttribute('data-tab') === nextTab) {
+            panel.classList.add('active');
+            void panel.offsetWidth;
+            panel.classList.add('slide-enter');
+            (function (activePanel) {
+              slideCleanupTimer = setTimeout(function () {
+                activePanel.classList.remove('slide-enter');
+              }, 350);
+            })(panel);
+          }
+        }
+
+        if (nextTab === 'about') {
+          equalizeTimelineCards();
+        }
+
+        try {
+          if (updateUrl && window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#' + nextTab);
+          }
+        } catch (err) {
+          // Ignore sandboxed history restrictions
+        }
+
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+          window.scrollTo(0, 0);
+        }
+      }
+
+      // Bind click events to all sidebar tabs, mobile pill tabs, and quick-action tab buttons
+      var allTriggers = document.querySelectorAll('[data-tab]');
+      for (var k = 0; k < allTriggers.length; k++) {
+        if (!allTriggers[k].classList.contains('page-panel')) {
+          allTriggers[k].addEventListener('click', function () {
+            var target = this.getAttribute('data-tab');
+            if (target) {
+              switchTab(target, true);
+            }
+          });
+        }
+      }
+
+      // Keyboard Left/Right Arrow Navigation between tabs
+      document.addEventListener('keydown', function (e) {
+        var tag = document.activeElement ? document.activeElement.tagName : '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+          return;
+        }
+        var idx = TABS.indexOf(currentTab);
+        if (idx === -1) {
+          return;
+        }
+        if (e.key === 'ArrowRight' && idx < TABS.length - 1) {
+          switchTab(TABS[idx + 1], true);
+        } else if (e.key === 'ArrowLeft' && idx > 0) {
+          switchTab(TABS[idx - 1], true);
+        }
+      });
+
+      // =======================================================================
+      // PUBLICATIONS FILTERING & LIVE SEARCH
+      // =======================================================================
+      var activeEra = 'all';
+      var filterBtns = document.querySelectorAll('.filter-btn');
+      var pubSearchInput = document.getElementById('pub-search-input');
+      var pubCards = document.querySelectorAll('.pub-card');
+      var pubCaption = document.getElementById('pub-results-caption');
+
+      function filterPublications() {
+        var query = pubSearchInput ? pubSearchInput.value.trim().toLowerCase() : '';
+        var visibleCount = 0;
+
+        for (var i = 0; i < pubCards.length; i++) {
+          var card = pubCards[i];
+          var era = card.getAttribute('data-era');
+          var text = card.textContent.toLowerCase();
+          var matchesEra = activeEra === 'all' || era === activeEra;
+          var matchesQuery = !query || text.indexOf(query) !== -1;
+
+          if (matchesEra && matchesQuery) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        }
+
+        if (pubCaption) {
+          pubCaption.textContent = 'Showing ' + visibleCount + ' of ' + pubCards.length + ' peer-reviewed publications';
+        }
+      }
+
+      for (var f = 0; f < filterBtns.length; f++) {
+        filterBtns[f].addEventListener('click', function () {
+          activeEra = this.getAttribute('data-filter') || 'all';
+          for (var m = 0; m < filterBtns.length; m++) {
+            filterBtns[m].classList.toggle('active', filterBtns[m] === this);
+          }
+          filterPublications();
+        });
+      }
+
+      if (pubSearchInput) {
+        pubSearchInput.addEventListener('input', filterPublications);
+      }
+
+      // =======================================================================
+      // CONFERENCE PRESENTATIONS EXPAND / COLLAPSE & SEARCH
+      // =======================================================================
+      var confExpanded = false;
+      var toggleConfBtn = document.getElementById('toggle-conf-btn');
+      var confSearchInput = document.getElementById('conf-search-input');
+      var confItems = document.querySelectorAll('.conf-item');
+      var confCaption = document.getElementById('conf-results-caption');
+
+      function updateConferences() {
+        var query = confSearchInput ? confSearchInput.value.trim().toLowerCase() : '';
+        var visibleCount = 0;
+
+        for (var i = 0; i < confItems.length; i++) {
+          var item = confItems[i];
+          var text = item.textContent.toLowerCase();
+          var isWithinFeatured = i < 8;
+
+          if (query) {
+            item.classList.remove('is-collapsed');
+            if (text.indexOf(query) !== -1) {
+              item.classList.remove('hidden');
+              visibleCount++;
+            } else {
+              item.classList.add('hidden');
+            }
+          } else {
+            item.classList.remove('hidden');
+            if (confExpanded || isWithinFeatured) {
+              item.classList.remove('is-collapsed');
+              visibleCount++;
+            } else {
+              item.classList.add('is-collapsed');
+            }
+          }
+        }
+
+        if (confCaption) {
+          if (query) {
+            confCaption.textContent = 'Showing ' + visibleCount + ' matching of ' + confItems.length + ' conference presentations';
+          } else if (confExpanded) {
+            confCaption.textContent = 'Showing all ' + confItems.length + ' conference presentations';
+          } else {
+            confCaption.textContent = 'Showing 8 featured of ' + confItems.length + ' conference presentations';
+          }
+        }
+      }
+
+      if (toggleConfBtn) {
+        toggleConfBtn.addEventListener('click', function () {
+          confExpanded = !confExpanded;
+          this.setAttribute('aria-expanded', confExpanded ? 'true' : 'false');
+          this.textContent = confExpanded ? 'Show Featured 8' : 'Show All 28 Presentations';
+          updateConferences();
+        });
+      }
+
+      if (confSearchInput) {
+        confSearchInput.addEventListener('input', updateConferences);
+      }
+
+      // =======================================================================
+      // COPY EMAIL TOAST ACTION
+      // =======================================================================
+      var copyEmailBtn = document.getElementById('copy-email-btn');
+      var toastEl = document.getElementById('toast');
+      var toastTimer = null;
+
+      function showToast() {
+        if (!toastEl) {
+          return;
+        }
+        toastEl.classList.add('show');
+        if (toastTimer) {
+          clearTimeout(toastTimer);
+        }
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove('show');
+        }, 2600);
+      }
+
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', function () {
+          var email = 'cchen634@umd.edu';
+          var copied = false;
+
+          try {
+            var tempInput = document.createElement('textarea');
+            tempInput.value = email;
+            tempInput.setAttribute('readonly', '');
+            tempInput.style.position = 'fixed';
+            tempInput.style.opacity = '0';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            copied = document.execCommand('copy');
+            document.body.removeChild(tempInput);
+          } catch (err) {
+            copied = false;
+          }
+
+          if (!copied && navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).catch(function () {});
+          }
+          showToast();
+        });
+      }
+
+      // =======================================================================
+      // INITIAL HASH ROUTE HANDLING & TIMELINE CARD HEIGHT EQUALIZATION
+      // =======================================================================
+      equalizeTimelineCards();
+      window.addEventListener('resize', equalizeTimelineCards);
+
+      var initialHash = window.location.hash ? window.location.hash.replace('#', '') : '';
+      if (initialHash && TABS.indexOf(initialHash) !== -1 && initialHash !== 'about') {
+        switchTab(initialHash, false);
+      }
+    })();
+  </script>
+</body>
+</html>
